@@ -1,6 +1,6 @@
 {
     "name": "mrlaozhou/laravel-entend",
-    "description": "Laravel database field extension",
+    "description": "Laravel extend",
     "keywords": ["extend", "laravel", "collection", "mrlaozhou"],
     "require": {
         "php": ">= 7.0"
