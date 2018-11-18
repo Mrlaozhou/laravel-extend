@@ -1,6 +1,6 @@
 {
     "name": "mrlaozhou/laravel-extend",
-    "description": "Laravel extend",
+    "description": "Laravel extend.",
     "keywords": ["extend", "laravel", "collection", "mrlaozhou"],
     "require": {
         "php": ">= 7.0"
@@ -26,6 +26,11 @@
         }
     },
     "extra": {
-        "laravel": {}
+        "laravel": {
+            "providers": [
+                "Mrlaozhou\\Extend\\LaravelExtendServiceProvider"
+            ],
+            "aliases": {}
+        }
     }
 }
