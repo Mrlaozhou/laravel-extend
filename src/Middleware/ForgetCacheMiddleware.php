@@ -2,8 +2,10 @@
 
 namespace Mrlaozhou\Extend\Middleware;
 
+use App\Leads;
 use Closure;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Mrlaozhou\Extend\Exception\ExtendException;
@@ -22,14 +24,17 @@ class ForgetCacheMiddleware
      */
     public function handle($request, Closure $next, $cacheKey=null, $expectAction = null)
     {
+        $response = $next($request);
+
         if( ! $cacheKey ) {
             throw new ExtendException( 'Middleware [Mrlaozhou\Extend\Middleware\ForgetCacheMiddleware] must need a key.' );
         }
         //  排除
         if( $expectAction && Str::endsWith( Route::current()->getName(), $expectAction ) ) {
-            return $next($request);
+            return $response;
         }
         Cache::forget( $cacheKey );
-        return $next($request);
+
+        return $response;
     }
 }
