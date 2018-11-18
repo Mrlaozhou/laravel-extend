@@ -22,7 +22,7 @@ class Collection extends \Illuminate\Database\Eloquent\Collection
                 Arr::set( $trees, $item[$selfKey], $item );
             }
         }
-        return new self($trees);
+        return new static($trees);
     }
 
     /**
@@ -36,7 +36,7 @@ class Collection extends \Illuminate\Database\Eloquent\Collection
      */
     public function toLists ($pid=0 ,self $lists=null, $level=1, $selfKey='id', $pidKey='pid')
     {
-        $lists          =   $lists ?: new self([]);
+        $lists          =   $lists ?: new static([]);
         foreach ( $this->items as $key => $item ) {
             if( $item[$pidKey] == $pid ) {
                 $item['level']        =   $level;
