@@ -18,7 +18,7 @@ class Collection extends \Illuminate\Database\Eloquent\Collection
         foreach ( $this->items as $key => $item ) {
             if( $item[$pidKey] == $pid ) {
                 $item['children']     =   $this->toTrees( $item[$selfKey] );
-                $this->offsetUnset( (string)$this->items[$key] );
+                $this->forget( $key );
                 Arr::set( $trees, $item[$selfKey], $item );
             }
         }
