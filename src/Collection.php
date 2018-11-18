@@ -10,7 +10,7 @@ class Collection extends \Illuminate\Database\Eloquent\Collection
      * @param string $selfKey
      * @param string $pidKey
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Mrlaozhou\Extend\Collection
      */
     public function toTrees ($pid=0, $selfKey='id', $pidKey='pid')
     {
