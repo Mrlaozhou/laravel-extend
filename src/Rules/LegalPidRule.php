@@ -71,6 +71,6 @@ class LegalPidRule implements Rule
      */
     public function message()
     {
-        return 'Param [:attribute] is not a legal pid.';
+        return ':attribute 不合法.';
     }
 }
