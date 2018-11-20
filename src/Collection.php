@@ -26,6 +26,26 @@ class Collection extends \Illuminate\Database\Eloquent\Collection
     }
 
     /**
+     * @param int    $pid
+     * @param string $selfKey
+     * @param string $pidKey
+     *
+     * @return array
+     */
+    public function toTreesArray ($pid=0, $selfKey='id', $pidKey='pid')
+    {
+        $trees          =   new static();
+        foreach ( $this->items as $key => $item ) {
+            if( $item[$pidKey] == $pid ) {
+                $item->children     =   $this->toTreesArray( $item[$selfKey] );
+                $this->forget( $key );
+                $trees->push( $item );
+            }
+        }
+        return $trees->toArray();
+    }
+
+    /**
      * @param int       $pid
      * @param self|null $lists
      * @param int       $level
