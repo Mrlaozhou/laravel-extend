@@ -49,6 +49,46 @@ class Collection extends \Illuminate\Database\Eloquent\Collection
     }
 
     /**
+     * @param int       $id
+     * @param self|null $parentsCollection
+     * @param int       $level
+     * @param string    $selfKey
+     * @param string    $pidKey
+     *
+     * @return bool|\Mrlaozhou\Extend\Collection
+     */
+    public function parents (int $id,self $parentsCollection=null, $level=1, $selfKey='id', $pidKey='pid' )
+    {
+        //  父级元素集
+        $parentsCollection      =   $parentsCollection ?: new static();
+        //  基础集合
+        $baseCollectionKeyById  =   $this->keyBy($selfKey);
+        //  元素是否存在
+        if( !$current = $baseCollectionKeyById->get( $id ) ) {
+            return false;
+        }
+        //  删除当前元素
+        $baseCollectionKeyById->forget( $id );
+        //  是否是顶级
+        if( ( $pid = $current->{$pidKey} ) == 0 ) {
+            return $parentsCollection;
+        }
+        //  父级是否存在
+        if( $parent = $baseCollectionKeyById->get( $pid ) ) {
+            //  设置等级
+            $parent->level      =   $level;
+            //  记录元素
+            $parentsCollection->push( $parent );
+            //  是否递归
+            if( $parent->{$pidKey} == 0 ) {
+                return $parentsCollection;
+            }
+            return $this->parents( $parent->{$selfKey}, $parentsCollection, $level+1, $selfKey, $pidKey );
+        }
+        return $parentsCollection;
+    }
+
+    /**
      * @param int    $pid
      * @param string $selfKey
      * @param string $pidKey
