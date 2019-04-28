@@ -2,7 +2,6 @@
 
 namespace Mrlaozhou\Extend\Middleware;
 
-use App\Leads;
 use Closure;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;

@@ -28,7 +28,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Mrlaozhou\\Extend\\LaravelExtendServiceProvider"
+                "Mrlaozhou\\Extend\\ServiceProvider"
             ],
             "aliases": {}
         }
