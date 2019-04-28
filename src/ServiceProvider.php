@@ -4,7 +4,7 @@ namespace Mrlaozhou\Extend;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Mrlaozhou\Extend\Exceptions\ExtensionNotLoadedException;
 
-class ServiceProvider extends BaseServiceProvider
+abstract class ServiceProvider extends BaseServiceProvider
 {
     public function boot () {}
 
