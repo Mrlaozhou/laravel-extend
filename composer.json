@@ -28,9 +28,11 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Mrlaozhou\\Extend\\ServiceProvider"
+                "Mrlaozhou\\Extend\\ExtendServiceProvider"
             ],
-            "aliases": {}
+            "aliases": {
+                "Expand": "Mrlaozhou\\Extend\\Facades\\Expand"
+            }
         }
     }
 }
