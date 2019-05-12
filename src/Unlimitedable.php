@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Cache;
  */
 trait Unlimitedable
 {
+    protected static $pkFieldName = 'id';
+
+    protected static $keywordFieldName = 'keyword';
+
+    protected static $pidFieldName = 'parent_id';
+
     /**
      * 获取所有数据
      *
@@ -30,7 +36,9 @@ trait Unlimitedable
     public static function unlimitedCollectionById(int $id)
     {
         if( $parent = static::unlimitedSingleById($id) ) {
-            return static::unlimitedCollection()->toLists($parent->getKey(), null, 1, 'id', 'parent_id');
+            return static::unlimitedCollection()->toLists(
+                $parent->getKey(), null, 1, static::$pkFieldName, static::$pidFieldName
+            );
         }
         return new Collection();
     }
@@ -45,7 +53,9 @@ trait Unlimitedable
     public static function unlimitedCollectionByKeyword(string $keyword)
     {
         if( $parent = static::unlimitedSingleByKeyword($keyword) ) {
-            return static::unlimitedCollection()->toLists($parent->getKey(), null, 1, 'id', 'parent_id');
+            return static::unlimitedCollection()->toLists(
+                $parent->getKey(), null, 1, static::$pkFieldName, static::$pidFieldName
+            );
         }
         return new Collection();
     }
@@ -69,7 +79,7 @@ trait Unlimitedable
      */
     public static function unlimitedSingleByKeyword(string $keyword)
     {
-        return static::unlimitedCollection()->where('keyword', $keyword)->first();
+        return static::unlimitedCollection()->where(static::$keywordFieldName, $keyword)->first();
     }
 
     /**
@@ -85,7 +95,7 @@ trait Unlimitedable
      */
     public function unlimitedPid()
     {
-        return $this->parent_id;
+        return $this->{static::$pidFieldName};
     }
 
     /**
@@ -101,7 +111,7 @@ trait Unlimitedable
      */
     public function unlimitedKeyword()
     {
-        return $this->keyword;
+        return $this->{static::$keywordFieldName};
     }
 
     /**
@@ -113,7 +123,9 @@ trait Unlimitedable
     {
         return new Collection(
             Cache::remember( static::unlimitedCacheKey(), 3600, function () {
-                return static::query()->select('id', 'name', 'keyword', 'parent_id')->get();
+                return static::query()
+                    ->select('id', 'name', static::$keywordFieldName, static::$pidFieldName)
+                    ->get();
             } )
         );
     }
