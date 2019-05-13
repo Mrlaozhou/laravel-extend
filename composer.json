@@ -3,7 +3,8 @@
     "description": "Laravel extend.",
     "keywords": ["extend", "laravel", "collection", "mrlaozhou"],
     "require": {
-        "php": ">= 7.0"
+        "php": ">= 7.0",
+        "spatie/url": "^1.3"
     },
     "authors": [
         {
@@ -18,7 +19,10 @@
     "autoload": {
         "psr-4": {
             "Mrlaozhou\\Extend\\": "src"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
