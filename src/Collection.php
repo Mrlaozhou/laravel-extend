@@ -17,7 +17,7 @@ class Collection extends \Illuminate\Database\Eloquent\Collection
         $trees          =   [];
         foreach ( $this->items as $key => $item ) {
             if( $item[$pidKey] == $pid ) {
-                $item['children']     =   $this->toTrees( $item[$selfKey] );
+                $item['children']     =   $this->toTrees( $item[$selfKey], $selfKey, $pidKey );
                 $this->forget( $key );
                 Arr::set( $trees, $item[$selfKey], $item );
             }
@@ -37,7 +37,7 @@ class Collection extends \Illuminate\Database\Eloquent\Collection
         $trees          =   new static();
         foreach ( $this->items as $key => $item ) {
             if( $item[$pidKey] == $pid ) {
-                $item->children     =   $this->toTreesArray( $item[$selfKey] );
+                $item->children     =   $this->toTreesArray( $item[$selfKey], $selfKey, $pidKey );
                 $this->forget( $key );
                 $trees->push( $item );
             }
