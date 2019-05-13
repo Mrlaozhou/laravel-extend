@@ -62,7 +62,7 @@ class Collection extends \Illuminate\Database\Eloquent\Collection
                 $item['level']        =   $level;
                 $lists->push( $item );
                 $this->forget($key);
-                $this->toLists( $item[$selfKey], $lists, $level+1 );
+                $this->toLists( $item[$selfKey], $lists, $level+1, $selfKey, $pidKey );
             }
         }
         return $lists;
