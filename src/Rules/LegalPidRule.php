@@ -18,17 +18,25 @@ class LegalPidRule implements Rule
     protected $originId;
 
     /**
+     * @var string
+     */
+    protected $pkName;
+
+    /**
      * LegalPid constructor.
      *
      * @param \Mrlaozhou\Extend\Collection $collection
      * @param int|null                     $originIdId
+     * @param string                        $pkName
      */
-    public function __construct(Collection $collection,int $originIdId = null)
+    public function __construct(Collection $collection,int $originIdId = null, string $pkName = 'id')
     {
         //
         $this->collection       =   $collection;
         //
         $this->originId         =   $originIdId;
+        //
+        $this->pkName           =   $pkName;
     }
 
     /**
@@ -43,7 +51,7 @@ class LegalPidRule implements Rule
         //  顶级
         if( $value == 0 ) return true;
         //  是否存在
-        if( ! $this->collection->keyBy('id')->get( $value, false ) )
+        if( ! $this->collection->keyBy($this->pkName)->get( $value, false ) )
             return false;
         //
         if( ! is_null($this->originId) )
@@ -60,7 +68,7 @@ class LegalPidRule implements Rule
     {
         return ! $this->collection
             ->toLists( $this->originId )
-            ->pluck('id')
+            ->pluck($this->pkName)
             ->push($this->originId)->contains($value);
     }
 
